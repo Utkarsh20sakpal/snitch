@@ -1,1 +1,43 @@
-@import "tailwindcss";
+/* Custom metallic styling inspired by Stitch Liquid Obsidian Design System */
+
+.obsidian-card {
+  background: rgba(17, 19, 24, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    0 24px 64px -12px rgba(0, 0, 0, 0.85),
+    0 0 24px rgba(190, 205, 225, 0.05);
+}
+
+.chrome-button {
+  background: linear-gradient(180deg, #FFFFFF 0%, #D8DFE8 45%, #A8B4C0 100%);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 16px rgba(255, 255, 255, 0.12);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chrome-button:hover {
+  filter: brightness(1.08);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 6px 24px rgba(0, 0, 0, 0.55),
+    0 0 24px rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.chrome-button:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+}
