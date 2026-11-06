@@ -8,7 +8,7 @@ export const useProduct = () => {
 
     async function handelCreateProduct(formData) {
         const response = await createProduct(formData);
-        return response.product;
+        return response.products;
     }
 
     async function handelGetSellerProducts() {
