@@ -22,3 +22,14 @@ export async function getSellerProducts() {
     return response.data;
 
 }
+
+export async function getAllProducts(){
+
+    const response = await productsApiInstance("/");
+    return response.data
+}
+
+export async function getProductById(id) {
+    const response = await productsApiInstance.get(`/${id}`);
+    return response.data;
+}

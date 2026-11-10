@@ -3,11 +3,18 @@ import { Register } from '../features/auth/pages/register';
 import { Login } from '../features/auth/pages/login';
 import { CreateProduct } from '../features/pages/createProduct';
 import Dashboard from '../features/pages/sellerDashboard';
+import Protected from '../features/auth/components/protected';
+import Home from '../features/pages/home';
+import { ProductDetail } from '../features/pages/productDetail';
 
 export const routes = createBrowserRouter([
     {
         path: "/",
-        element: <h1 className='text-white p-8 text-center text-xl font-mono'>SNITCH ATELIER HOME</h1>
+        element: <Home />
+    },
+    {
+        path: "/product/:id",
+        element: <ProductDetail />
     },
     {
         path: "/register",
@@ -22,11 +29,15 @@ export const routes = createBrowserRouter([
         children:[
             {
             path:"/seller/create-product",
-            element:<CreateProduct />
+            element:<Protected
+             role = "seller"
+            ><CreateProduct /></Protected>
         },
         {
             path:"/seller/dashboard",
-            element:<Dashboard />
+            element:<Protected 
+            role = "seller"
+            ><Dashboard /> </Protected>
         }
 
     

@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import reducer from "../../auth/state/auth.slice";
+import { getAllProducts } from "../services/products.api";
 
 
 const productSlice = createSlice({
@@ -6,15 +8,19 @@ const productSlice = createSlice({
     name: "product",
     initialState: {
         sellerProducts: [],
+        products: [],
     },
 
     reducers: {
         setSellerProducts: (state, action) => {
             state.sellerProducts = action.payload;
-        }
+        },
+       setProducts:( state , action) => {
+            state.products = action.payload
+       }        
     }
 
 })
 
-export const { setSellerProducts } = productSlice.actions;
+export const { setSellerProducts , setProducts} = productSlice.actions;
 export default productSlice.reducer;

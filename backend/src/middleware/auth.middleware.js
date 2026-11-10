@@ -9,7 +9,7 @@ const authenticateSeller = async (req, res, next) => {
 const token = req.cookies.token;
 
 if(!token){
-    return re.status(401).json({
+    return res.status(401).json({
         message:"Unauthorized Access"
     })
 }
@@ -46,5 +46,34 @@ catch(err){
 }
 
 }
+
+export const authenticateUser = async (req, res, next) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({
+            message: "Unauthorized Access"
+        });
+    }
+
+    try {
+        const decoded = jwt.verify(token, config.JWT_SECRET);
+        const user = await userModel.findById(decoded.id);
+
+        if (!user) {
+            return res.status(401).json({
+                message: "invalid credentials"
+            });
+        }
+
+        req.user = user;
+        next();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            message: "Server error"
+        });
+    }
+};
 
 export default authenticateSeller;

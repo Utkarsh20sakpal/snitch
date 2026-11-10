@@ -9,7 +9,12 @@ async function sendTokenResponse(user, statusCode, res, message = "Success") {
         expiresIn: config.JWT_EXPIRES_IN || "1h",
     });
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+        httpOnly: false,
+        secure: config.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000
+    });
 
     return res.status(statusCode).json({
         message,

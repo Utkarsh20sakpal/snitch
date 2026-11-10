@@ -1,13 +1,15 @@
 import { Router } from "express";
 import { validateRegister, validateLogin } from "../validator/auth.validator.js";
-import { registerUser, loginUser, googleCallback } from "../controller/auth.controller.js";
+import { registerUser, loginUser, googleCallback, getMe } from "../controller/auth.controller.js";
 import passport from "passport";
 import { config } from "../config/config.js";
+import { authenticateUser } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
 router.post("/register", validateRegister, registerUser);
 router.post("/login", validateLogin, loginUser);
+router.get("/getMe" , authenticateUser, getMe )
 
 router.get("/google",
     passport.authenticate("google", { scope: ["profile", "email"] })

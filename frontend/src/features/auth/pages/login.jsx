@@ -67,15 +67,16 @@ export const Login = () => {
       return;
     }
 
-    const res = await handleLogin({
+    const user = await handleLogin({
       email: formData.email.trim(),
       password: formData.password,
     });
 
-    if (res?.success) {
+    if(user.role == "buyer") {
       navigate("/");
-    } else if (res?.error) {
-      setFormError(res.error);
+    }
+     else if (user.role == "seller") {
+      navigate("/seller/dashboard");
     }
   };
 

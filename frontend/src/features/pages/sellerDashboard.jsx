@@ -20,20 +20,23 @@ const CURRENCY_SYMBOLS = {
 };
 
 const ProductCard = ({ product }) => {
-  const { title, description, price, images, createdAt } = product;
+  const { title, description, price, images, createdAt, _id } = product;
   const symbol = CURRENCY_SYMBOLS[price?.currency] || price?.currency || "";
   const thumb = images?.[0]?.url;
   const imageCount = images?.length || 0;
   const date = createdAt
     ? new Date(createdAt).toLocaleDateString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      })
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    })
     : null;
 
   return (
-    <div className="group relative rounded-xl border border-zinc-800 bg-[#0D0F13] overflow-hidden hover:border-zinc-600 transition-all duration-200">
+    <Link
+      to={`/product/${_id}`}
+      className="group relative rounded-xl border border-zinc-800 bg-[#0D0F13] overflow-hidden hover:border-zinc-500 transition-all duration-200 block"
+    >
       {/* Thumbnail */}
       <div className="relative aspect-[4/3] bg-[#090B0E] overflow-hidden">
         {thumb ? (
@@ -62,7 +65,7 @@ const ProductCard = ({ product }) => {
       {/* Info */}
       <div className="p-4 space-y-2">
         <div className="flex items-start justify-between gap-2">
-          <p className="text-sm font-semibold text-zinc-100 leading-tight truncate">
+          <p className="text-sm font-semibold text-zinc-100 leading-tight truncate group-hover:text-white transition-colors">
             {title}
           </p>
           <span className="shrink-0 font-mono text-sm text-white font-bold">
@@ -87,7 +90,7 @@ const ProductCard = ({ product }) => {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

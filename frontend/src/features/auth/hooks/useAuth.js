@@ -1,5 +1,5 @@
 import { setLoading, setError, setUser } from "../state/auth.slice";
-import { register, login } from "../services/auth.api";
+import { register, login, getMe } from "../services/auth.api";
 import { useDispatch, useSelector } from "react-redux";
 
 export const useAuth = () => {
@@ -12,7 +12,7 @@ export const useAuth = () => {
             dispatch(setError(null));
             const data = await register({ email, contact, password, fullname, isSeller });
             dispatch(setUser(data.user));
-            return { success: true, data };
+            return data.user;
         } catch (err) {
             const errorMessage = err.response?.data?.message || err.response?.data?.errors?.[0]?.msg || err.message || "Registration failed";
             dispatch(setError(errorMessage));
@@ -28,7 +28,7 @@ export const useAuth = () => {
             dispatch(setError(null));
             const data = await login({ email, password });
             dispatch(setUser(data.user));
-            return { success: true, data };
+            return data.user;
         } catch (err) {
             const errorMessage = err.response?.data?.message || err.response?.data?.errors?.[0]?.msg || err.message || "Login failed";
             dispatch(setError(errorMessage));
@@ -38,5 +38,21 @@ export const useAuth = () => {
         }
     }
 
-    return { handleRegister, handleLogin, user, loading, error };
-}
+    async function handelGetMe (){
+
+        try{
+            dispatch(setLoading(true));
+            const data = await getMe();
+            dispatch(setUser(data.user));
+            console.log(user)
+        }
+        catch(err){
+            console.log(err);
+        }
+        finally{
+            dispatch(setLoading(false));
+        }
+    }
+
+    return { handleRegister, handleLogin, handelGetMe, user, loading, error };
+}
