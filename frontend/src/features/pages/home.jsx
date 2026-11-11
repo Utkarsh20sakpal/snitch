@@ -226,8 +226,8 @@ const SkeletonCard = () => (
 
 /* ─── Main Home Page Component ─────────────────────────────── */
 const Home = () => {
-  const { handelGetMe, user, loading: authLoading } = useAuth();
-  const { handelGetAllProducts } = useProduct();
+  const { handleGetMe, user, loading: authLoading } = useAuth();
+  const { handleGetAllProducts } = useProduct();
   const products = useSelector((state) => state.product.products) || [];
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -236,8 +236,8 @@ const Home = () => {
 
   useEffect(() => {
     // Rehydrate authenticated user & load catalogue
-    handelGetMe();
-    handelGetAllProducts().finally(() => setFetching(false));
+    handleGetMe();
+    handleGetAllProducts().finally(() => setFetching(false));
   }, []);
 
   // Filter & Sort logic

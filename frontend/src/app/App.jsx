@@ -9,12 +9,12 @@ import { useEffect } from 'react';
 
 function App() {
 
-  const {handelGetMe} = useAuth()
+  const {handleGetMe} = useAuth()
   const user = useSelector((state) => state.auth.user)
   console.log(user)
 
   useEffect (() => {
-    handelGetMe()
+    handleGetMe()
   }, [] )
 
 

@@ -18,7 +18,7 @@ import { useProduct } from "../products/hooks/useproduct.js";
 const CURRENCIES = ["INR", "USD", "EUR", "GBP", "JPY", "CAD"];
 
 export const CreateProduct = () => {
-  const { handelCreateProduct } = useProduct();
+  const { handleCreateProduct } = useProduct();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -94,7 +94,7 @@ export const CreateProduct = () => {
 
     setLoading(true);
     try {
-      await handelCreateProduct(data);
+      await handleCreateProduct(data);
       setSuccess(true);
       setTimeout(() => navigate("/"), 2000);
     } catch (err) {

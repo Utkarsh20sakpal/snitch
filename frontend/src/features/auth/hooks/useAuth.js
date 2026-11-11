@@ -38,7 +38,7 @@ export const useAuth = () => {
         }
     }
 
-    async function handelGetMe (){
+    async function handleGetMe (){
 
         try{
             dispatch(setLoading(true));
@@ -54,5 +54,5 @@ export const useAuth = () => {
         }
     }
 
-    return { handleRegister, handleLogin, handelGetMe, user, loading, error };
+    return { handleRegister, handleLogin, handleGetMe, user, loading, error };
 }

@@ -88,3 +88,109 @@ export async function getProductById(req, res) {
         });
     }
 }
+
+export async function addProductVariant(req, res) {
+    try {
+        const { id } = req.params;
+        const seller = req.user;
+
+        const product = await productModel.findOne({ _id: id, seller: seller._id });
+        if (!product) {
+            return res.status(404).json({
+                message: "Product not found or unauthorized",
+                success: false
+            });
+        }
+
+        const { stock, priceAmount, priceCurrency, attributes } = req.body;
+
+        let parsedAttributes = {};
+        if (typeof attributes === "string") {
+            try {
+                parsedAttributes = JSON.parse(attributes);
+            } catch {
+                parsedAttributes = {};
+            }
+        } else if (typeof attributes === "object" && attributes !== null) {
+            parsedAttributes = attributes;
+        }
+
+        let variantImages = [];
+        if (req.files && req.files.length > 0) {
+            variantImages = await Promise.all(
+                req.files.map(async (file) => {
+                    const url = await uploadFile({
+                        buffer: file.buffer,
+                        fileName: file.originalname,
+                    });
+                    return { url };
+                })
+            );
+        } else if (req.body.images) {
+            const raw = Array.isArray(req.body.images) ? req.body.images : [req.body.images];
+            variantImages = raw.map((img) => (typeof img === "string" ? { url: img } : img));
+        }
+
+        const variantPrice = priceAmount
+            ? {
+                  amount: Number(priceAmount),
+                  currency: priceCurrency || product.price?.currency || "INR"
+              }
+            : product.price;
+
+        const newVariant = {
+            stock: Number(stock) || 0,
+            attributes: parsedAttributes,
+            price: variantPrice,
+            images: variantImages
+        };
+
+        product.variants.push(newVariant);
+        await product.save();
+
+        res.status(200).json({
+            message: "Variant added successfully",
+            success: true,
+            product
+        });
+    } catch (err) {
+        console.error("Error adding variant:", err);
+        res.status(500).json({
+            message: err.message || "Server error adding variant",
+            success: false
+        });
+    }
+}
+
+export async function deleteProductVariant(req, res) {
+    try {
+        const { id, variantId } = req.params;
+        const seller = req.user;
+
+        const product = await productModel.findOne({ _id: id, seller: seller._id });
+        if (!product) {
+            return res.status(404).json({
+                message: "Product not found or unauthorized",
+                success: false
+            });
+        }
+
+        product.variants = product.variants.filter(
+            (v) => v._id && v._id.toString() !== variantId
+        );
+        await product.save();
+
+        res.status(200).json({
+            message: "Variant deleted successfully",
+            success: true,
+            product
+        });
+    } catch (err) {
+        console.error("Error deleting variant:", err);
+        res.status(500).json({
+            message: "Server error deleting variant",
+            success: false
+        });
+    }
+}
+

@@ -32,8 +32,8 @@ const CURRENCY_SYMBOLS = {
 export const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { handelGetProductById } = useProduct();
-  const { handelGetMe, user } = useAuth();
+  const { handleGetProductById } = useProduct();
+  const { handleGetMe, user } = useAuth();
   const products = useSelector((state) => state.product.products) || [];
 
   const [product, setProduct] = useState(null);
@@ -43,7 +43,7 @@ export const ProductDetail = () => {
   const [acquired, setAcquired] = useState(false);
 
   useEffect(() => {
-    handelGetMe();
+    handleGetMe();
 
     async function fetchProduct() {
       setLoading(true);
@@ -57,7 +57,7 @@ export const ProductDetail = () => {
 
       // Fetch fresh data from backend
       try {
-        const data = await handelGetProductById(id);
+        const data = await handleGetProductById(id);
         if (data) {
           setProduct(data);
         } else if (!existing) {

@@ -6,6 +6,7 @@ import Dashboard from '../features/pages/sellerDashboard';
 import Protected from '../features/auth/components/protected';
 import Home from '../features/pages/home';
 import { ProductDetail } from '../features/pages/productDetail';
+import SellerProductDetails from '../features/pages/sellerProductDetails'
 
 export const routes = createBrowserRouter([
     {
@@ -38,7 +39,13 @@ export const routes = createBrowserRouter([
             element:<Protected 
             role = "seller"
             ><Dashboard /> </Protected>
-        }
+        }, 
+        {
+             path: "/seller/product/:productId",
+             element: <Protected role="seller" >
+             <SellerProductDetails />
+                        </Protected>
+          }
 
     
     ]

@@ -33,3 +33,15 @@ export async function getProductById(id) {
     const response = await productsApiInstance.get(`/${id}`);
     return response.data;
 }
+
+export async function addProductVariant(id, formData) {
+    const response = await productsApiInstance.post(`/${id}/variants`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+}
+
+export async function deleteProductVariant(id, variantId) {
+    const response = await productsApiInstance.delete(`/${id}/variants/${variantId}`);
+    return response.data;
+}

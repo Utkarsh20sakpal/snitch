@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link
-      to={`/product/${_id}`}
+      to={`/seller/product/${_id}`}
       className="group relative rounded-xl border border-zinc-800 bg-[#0D0F13] overflow-hidden hover:border-zinc-500 transition-all duration-200 block"
     >
       {/* Thumbnail */}
@@ -95,11 +95,11 @@ const ProductCard = ({ product }) => {
 };
 
 const Dashboard = () => {
-  const { handelGetSellerProducts } = useProduct();
+  const { handleGetSellerProducts } = useProduct();
   const sellerProducts = useSelector((state) => state.product.sellerProducts);
 
   useEffect(() => {
-    handelGetSellerProducts();
+    handleGetSellerProducts();
   }, []);
 
   const totalValue = sellerProducts?.reduce(
